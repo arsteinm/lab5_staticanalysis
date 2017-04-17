@@ -28,7 +28,8 @@ final class Main {
 		}
 
 		String propertyFile = args[0];
-		JFrame frame = new MainFrame(propertyFile);
+		//SER316 TASK 2 FINDBUGS FIX
+		new MainFrame(propertyFile);
 //		frame.setVisible(true);
 	}
 }

@@ -37,10 +37,14 @@ class MainFrame extends JFrame {
 		try {
 			fis =  new FileInputStream(propertyFile);
 			props.load(fis);
-			fis.close();
+			//SER316 TASK 2 FINDBUGS FIX
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 			throw ioe;
+		} finally{  //SER316 TASK 2 FINDBUGS FIX
+			if (fis!=null){
+				fis.close();
+			}
 		}
 		
 		constructForm();

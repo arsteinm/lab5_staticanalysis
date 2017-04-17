@@ -1,7 +1,9 @@
 package banking.primitive.core;
 
 public class Savings extends Account {
-
+	//SER316 TASK 2 FINDBUGS FIX
+	private static final long serialVersionUID = 5685465468L;
+	
 	private int numWithdraws = 0;
 
 	public Savings(String name) {
@@ -33,16 +35,23 @@ public class Savings extends Account {
 		if (getState() == State.OPEN && amount > 0.0f) {
 			balance = balance - amount;
 			numWithdraws++;
-			if (numWithdraws > 3 && numWithdraws % 1 == 0)
+			//SER316 TASK 1 CHECKSTYLE FIX
+			//SER316 TASK 2 FINDBUGS FIX
+			if (numWithdraws > 3) {
 				balance = balance - 1.0f;
-			if (balance < 0.0f)
+			}
+			//SER316 TASK 1 CHECKSTYLE FIX
+			if (balance < 0.0f){
 				setState(State.OVERDRAWN);
+			}
 			return true;
 		}
 		return false;
 	}
-
-	public String getType() { return "Checking"; }
+	//SER316 TASK 1 CHECKSTYLE FIX
+	public String getType() { 
+		return "Checking"; 
+	}
 
 	public String toString() {
 		return "Savings: " + getName() + ": " + getBalance();

@@ -36,18 +36,24 @@ public class Checking extends Account {
 
 	/**
 	 * Withdraw. After 5 withdrawals a fee of $2 is charged per transaction. You may
-	 * continue to withdraw an overdrawn account until the balance is below -$100. Withdrawing funds does not work on a closed account.
+	 * //SER316 TASK 1 CHECKSTYLE FIX
+	 * continue to withdraw an overdrawn account until the balance
+	 *  is below -$100. Withdrawing funds does not work on a closed account.
      *
      * @param float is the desired positive withdraw amount
      * @return boolean stating if the transaction was successful
 	 */
 	public boolean withdraw(float amount) {
 		if (amount > 0.0f) {
-			if (getState() == State.OPEN || (getState() == State.OVERDRAWN && balance >= -1000.0f)) { 
+			//SER316 TASK 1 CHECKSTYLE FIX
+			if (getState() == State.OPEN || (getState() == 
+					State.OVERDRAWN && balance >= -1000.0f)) { 
 				balance = balance - amount;
 				numWithdraws++;
-				if (numWithdraws > 5)
+				//SER316 TASK 1 CHECKSTYLE FIX
+				if (numWithdraws > 5) {
 					balance = balance - 2.0f;
+				}
 				if (balance < 0.0f) {
 					setState(State.OVERDRAWN);
 				}
@@ -56,8 +62,10 @@ public class Checking extends Account {
 		}
 		return false;
 	}
-
-	public String getType() { return "Checking"; }
+	//SER316 TASK 1 CHECKSTYLE FIX
+	public String getType() { 
+		return "Checking"; 
+	}
 	
 	public String toString() {
 		return "Checking: " + getName() + ": " + getBalance();

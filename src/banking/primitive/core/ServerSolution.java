@@ -27,8 +27,9 @@ class ServerSolution implements AccountServer {
 				int size = sizeI.intValue();
 				for (int i=0; i < size; i++) {
 					Account acc = (Account) in.readObject();
-					if (acc != null)
+					if (acc != null) {
 						accountMap.put(acc.getName(), acc);
+					}
 				}
 			}
 		}catch(RuntimeException e){
@@ -51,10 +52,11 @@ class ServerSolution implements AccountServer {
 		throws IllegalArgumentException {
 		
 		Account acc;
-		if (type=="Checking") {
+		//SER316 TASK 2 FINDBUGS FIX
+		if (type.equals("Checking")) {
 			acc = new Checking(name, balance);
-
-		} else if (type=="Savings") {
+			//SER316 TASK 2 FINDBUGS FIX
+		} else if (type.equals("Savings")) {
 			acc = new Savings(name, balance);
 
 		} else {
@@ -70,8 +72,12 @@ class ServerSolution implements AccountServer {
 
 	public boolean newAccount(String type, String name, float balance) 
 		throws IllegalArgumentException {
-		
-		if (balance < 0.0f) throw new IllegalArgumentException("New account may not be started with a negative balance");
+		//SER316 TASK 1 CHECKSTYLE FIX
+		if (balance < 0.0f){
+			//SER316 TASK 1 CHECKSTYLE FIX
+			throw new IllegalArgumentException(
+					"New account may not be started with a negative balance");
+		}
 		
 		return newAccountFactory(type, name, balance);
 	}
@@ -112,7 +118,8 @@ class ServerSolution implements AccountServer {
 			out.writeObject(Integer.valueOf(accountMap.size()));
 			for (int i=0; i < accountMap.size(); i++) 
 			{
-				out.writeObject(accountMap.get(i));
+				//SER316 TASK 2 FINDBUGS FIX
+				out.writeObject(accountMap.get(Integer.toString(i)));
 			}
 		} 
 		catch(RuntimeException e){
